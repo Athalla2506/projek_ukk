@@ -19,8 +19,8 @@
     <!-- Hero Section -->
     <section class="min-h-screen flex items-center justify-between px-20">
         <div class="w-1/2">
-[            <img src="{{asset('image/4siswa.png')}}" alt="Hero Image" class="w-full max-w-2xl">
-]        </div>
+            <img src="{{asset('image/4siswa.png')}}" alt="Hero Image" class="w-full max-w-2xl">
+        </div>
         <div class="w-1/2 text-center space-y-6">
             <h1 class="text-5xl font-bold leading-tight">Praktik Kerja Lapangan SIJA</h1>
             <p class="text-xl leading-relaxed max-w-xl mx-auto opacity-90">
