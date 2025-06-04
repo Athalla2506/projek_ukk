@@ -13,39 +13,36 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+// 🔁 Redirect pengguna ke dashboard berdasarkan role
 Route::get('/dashboard', function () {
-    return redirect()->route('redirect');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-// 🔀 Redirect berdasarkan role
-Route::middleware(['auth'])->get('/redirect', function () {
     $user = auth()->user();
 
     if ($user->hasRole('Admin')) {
         return redirect('/admin'); // Filament admin
     } elseif ($user->hasRole('Guru')) {
-        return redirect('/guru/dashboard');
+        return redirect()->route('guru.dashboard');
     } elseif ($user->hasRole('Siswa')) {
-        return redirect('/siswa/dashboard');
+        return redirect()->route('siswa.dashboard');
     } else {
-        abort(403); // Role tidak dikenali
+        abort(403, 'Role tidak dikenali.');
     }
-})->name('redirect');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 // 🧑‍🏫 Dashboard Guru
 Route::middleware(['auth', RoleMiddleware::class . ':Guru'])->group(function () {
-    Route::get('/guru/dashboard', [GuruController::class, 'index'])
-        ->name('guru.dashboard');
+    Route::get('/guru', [GuruController::class, 'index'])->name('guru.dashboard');
 });
 
 // 🎓 Dashboard Siswa 
 Route::middleware(['auth', RoleMiddleware::class . ':Siswa'])->group(function () {
-    Route::get('/siswa/dashboard', [SiswaController::class, 'index'])
-        ->name('siswa.dashboard');
+    Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.dashboard');
 
     // PKL Routes
     Route::get('/siswa/pkl/daftar', [SiswaPklController::class, 'daftar'])->name('siswa.pkl.daftar');
     Route::post('/siswa/pkl/simpan', [SiswaPklController::class, 'simpan'])->name('siswa.pkl.simpan');
+
+    // Data siswa lainnya
+    Route::get('/siswa/data-siswa', [ParaSiswaController::class, 'parasiswa'])->name('siswa.parasiswa');
 });
 
 // ⚙️ Pengaturan Volt
@@ -57,13 +54,7 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
-// 🎓 Routes Siswa
-Route::middleware(['auth', RoleMiddleware::class . ':Siswa'])->group(function () {
-    Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
-    Route::get('/siswa/data-siswa', [ParaSiswaController::class, 'parasiswa'])->name('siswa.parasiswa');
-});
-
-// Industri Routes
+// 🏭 Industri Routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/industri', [IndustriController::class, 'index'])->name('industri.index');
     Route::post('/industri', [IndustriController::class, 'store'])->name('industri.store');
