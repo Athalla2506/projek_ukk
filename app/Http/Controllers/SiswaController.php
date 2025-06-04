@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Pkl;
 use App\Models\Siswa;
 use Illuminate\Http\Request;

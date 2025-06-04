@@ -16,11 +16,17 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+#        User::factory()->create([
+#            'name' => 'Test User',
+#            'email' => 'test@example.com',
+#        ]);
         Role::create(['name' => 'siswa']);
         Role::create(['name' => 'guru']);
+
+        $this->call([
+            SiswaSeeder::class,
+            GuruSeeder::class,
+            IndustriSeeder::class,
+        ]);
     }
 }
