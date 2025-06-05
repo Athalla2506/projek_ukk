@@ -52,7 +52,7 @@ class SiswaPklController extends Controller
             'guru_id' => $guru ? $guru->id : 1  // Menggunakan guru acak atau ID 1 jika tidak ada guru
         ]);
 
-        return redirect()->route('siswa.dashboard')
+        return redirect()->route('siswa')
             ->with('success', 'Pendaftaran PKL berhasil. Silakan tunggu persetujuan.');
     }
 }
