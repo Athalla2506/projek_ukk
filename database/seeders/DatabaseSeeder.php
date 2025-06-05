@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
 #        ]);
         Role::create(['name' => 'siswa']);
         Role::create(['name' => 'guru']);
+        Role::create(['name' => 'super_admin']);
 
         $this->call([
             SiswaSeeder::class,
