@@ -40,7 +40,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':siswa'])->group(function ()
     // PKL Routes
     Route::get('/siswa/pkl/daftar', [SiswaPklController::class, 'daftar'])->name('siswa.pkl.daftar');
     Route::post('/siswa/pkl/simpan', [SiswaPklController::class, 'simpan'])->name('siswa.pkl.simpan');
-    Route::get('/siswa/oarasiswa', [SiswaPklController::class, 'parasiswa'])->name('siswa.parasiswa');
+    // Route::get('/siswa/parasiswa', [SiswaPklController::class, 'parasiswa'])->name('siswa.parasiswa');
 
 
 });

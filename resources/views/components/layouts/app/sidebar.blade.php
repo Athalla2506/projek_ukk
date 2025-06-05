@@ -24,17 +24,7 @@
                             {{ __('Dashboard') }}
                         </flux:navlist.item>
 
-                        @if(!auth()->user()->hasRole('Guru'))
-                            <flux:navlist.item 
-                                icon="users" 
-                                :href="route('siswa.parasiswa')"  
-                                :current="request()->routeIs('siswa.parasiswa')"
-                                wire:navigate
-                                class="hover:bg-indigo-50 dark:hover:bg-indigo-800/50 transition-colors duration-200"
-                            >
-                                {{ __('Daftar Siswa') }}
-                            </flux:navlist.item>
-                        @endif
+                        
 
                             <flux:navlist.item 
                                 icon="building-office-2" 
