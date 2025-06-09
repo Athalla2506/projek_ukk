@@ -11,7 +11,7 @@ class GuruController extends Controller
 {
     public function index()
     {
-        return view('guru.dashboard', [
+        return response()->json([
             'totalSijaA' => Siswa::where('kelas', 'SIJA A')->count(),
             'totalSijaB' => Siswa::where('kelas', 'SIJA B')->count(),
             'totalGuru' => Guru::count(),
@@ -19,22 +19,20 @@ class GuruController extends Controller
             'siswaB' => Siswa::where('kelas', 'SIJA B')->get(),
             'gurus' => Guru::all()
         ]);
-
-        return Guru::all();
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'nama' => 'required|string|max:255',
-            'nip' => 'required|string|unique:guru,nip',
+            'nip' => 'required|string|unique:gurus,nip',
             'jenis_kelamin' => 'required|in:L,P',
             'alamat' => 'required|string',
             'kontak' => 'nullable|string|max:20',
-            'email' => 'nullable|email|unique:guru,email',
+            'email' => 'nullable|email|unique:gurus,email',
         ]);
 
-        $guru = Guru::create($request->all());
+        $guru = Guru::create($validated);
 
         return response()->json([
             'message' => 'Guru berhasil dibuat',
@@ -42,46 +40,45 @@ class GuruController extends Controller
         ], 201);
     }
 
-    public function show($id)
-    {
-        $guru = Guru::find($id);
+    // public function show($id)
+    // {
+    //     $guru = Guru::find($id);
 
-        if (!$guru) {
-            return response()->json(['message' => 'Guru tidak ditemukan'], 404);
-        }
+    //     if (!$guru) {
+    //         return response()->json(['message' => 'Guru tidak ditemukan'], 404);
+    //     }
 
-        return response()->json($guru);
-    }
+    //     return response()->json($guru);
+    // }
 
-    public function update(Request $request, string $id)
-    {
-        try {
-            $siswa = Guru::findOrFail($id);
+    // public function update(Request $request, $id)
+    // {
+    //     try {
+    //         $guru = Guru::findOrFail($id);
 
-            $validated = $request->validate([
-                'nama'       => 'sometimes|required|TextInput|max:255',
-                'nis'        => 'sometimes|required|TextInput|max:255|unique:guru,nis,' . $id,
-                'jenis_kelamin'     => 'sometimes|required|in:L,P',
-                'alamat'     => 'sometimes|required|TextInput',
-                'kontak'     => 'sometimes|required|TextInput|max:255',
-                'email'      => 'sometimes|required|email|unique:guru,email,',
-            ]);
+    //         $validated = $request->validate([
+    //             'nama' => 'sometimes|required|string|max:255',
+    //             'nip' => 'sometimes|required|string|max:255|unique:gurus,nip,' . $id,
+    //             'jenis_kelamin' => 'sometimes|required|in:L,P',
+    //             'alamat' => 'sometimes|required|string',
+    //             'kontak' => 'sometimes|nullable|string|max:20',
+    //             'email' => 'sometimes|nullable|email|unique:gurus,email,' . $id,
+    //         ]);
 
-            $siswa->fill($validated)->save();
+    //         $guru->update($validated);
 
-            return response()->json($siswa);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Server Error',
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
+    //         return response()->json($guru);
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'error' => 'Server Error',
+    //             'message' => $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
 
-    public function destroy(Guru $guru)
-    {
-        $guru->delete();
-        return response()->json(null, 204);
-    }
-
+    // public function destroy(Guru $guru)
+    // {
+    //     $guru->delete();
+    //     return response()->json(['message' => 'Guru berhasil dihapus.'], 204);
+    // }
 }

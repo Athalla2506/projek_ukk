@@ -83,24 +83,18 @@ class IndustriController extends Controller
 
         $request->validate([
             'nama' => 'required|string|max:255',
-            'bidang_usaha' => 'required|string|max:255',
+            'deskripsi' => 'required|string|max:255',
             'alamat' => 'required|string',
             'kontak' => 'nullable|string|max:20',
             'email' => 'nullable|email|unique:industri,email,' . $id,
-            'guru_pembimbing' => 'required|exists:guru,id',
-            'website' => 'required|string|max:255',
-            'foto' => 'nullable|string|max:255',
         ]);
 
         $industri->update([
             'nama' => $request->nama,
-            'bidang_usaha' => $request->bidang_usaha,
+            'deskripsi' => $request->bidang_usaha,
             'alamat' => $request->alamat,
             'kontak' => $request->kontak,
             'email' => $request->email,
-            'guru_pembimbing' => $request->guru_pembimbing,
-            'website' => $request->website,
-            'foto' => $request->foto,
         ]);
 
         $industri->load('guru');
@@ -108,7 +102,6 @@ class IndustriController extends Controller
         return response()->json([
             'message' => 'Data industri berhasil diperbarui',
             'industri' => $industri,
-            'guru_pembimbing' => $industri->guru ? $industri->guru->nama : null,
         ]);
     }
 

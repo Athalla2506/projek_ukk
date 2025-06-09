@@ -73,6 +73,7 @@ class GuruResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->visible(fn () => auth()->user()->hasRole('admin')), // hanya admin yang bisa lihat tombol edit
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

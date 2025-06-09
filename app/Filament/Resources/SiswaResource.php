@@ -61,6 +61,7 @@ class SiswaResource extends Resource
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('status_pkl')
+                    ->label('Status PKL')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -76,7 +77,8 @@ class SiswaResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
-                    ->visible(fn () => auth()->user()->hasRole('admin')), // hanya admin yang bisa lihat tombol edit
+                    ->visible(fn () => auth()->user()->hasRole('admin')),
+                    Tables\Actions\EditAction::make(), // hanya admin yang bisa lihat tombol edit
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

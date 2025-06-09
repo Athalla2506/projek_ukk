@@ -12,6 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Carbon;
+
 
 class PklResource extends Resource
 {
@@ -22,23 +24,31 @@ class PklResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\TextInput::make('siswa_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('industri_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('guru_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\DatePicker::make('tanggal_mulai')
-                    ->required(),
-                Forms\Components\DatePicker::make('tanggal_selesai')
-                    ->required(),
-                Forms\Components\Toggle::make('status')
-                    ->required(),
-            ]);
+        ->schema([
+            Forms\Components\Select::make('siswa_id')
+                ->relationship('siswa', 'nama')
+                ->searchable()
+                ->required(),
+
+            Forms\Components\Select::make('industri_id')
+                ->relationship('industri', 'nama')
+                ->searchable()
+                ->required(),
+
+            Forms\Components\Select::make('guru_id')
+                ->relationship('guru', 'nama')
+                ->searchable()
+                ->required(),
+
+            Forms\Components\DatePicker::make('tanggal_mulai')
+                ->required(),
+
+            Forms\Components\DatePicker::make('tanggal_selesai')
+                ->required(),
+            
+            Forms\Components\Toggle::make('status')
+                ->required(),
+        ]);
     }
 
     public static function table(Table $table): Table
